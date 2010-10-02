@@ -31,7 +31,7 @@ module Resque
       @con = Mongo::Connection.from_uri(ENV['MONGOHQ_URL'])
 #      host, port = server.split(':')
 #      @con = Mongo::Connection.new(host, port)
-      @db = @con.db('monque')
+      @db = @con.db(uri.path.gsub(/^\//, ''))
       @mongo = @db.collection('monque')
       @workers = @db.collection('workers')
       @failures = @db.collection('failures')
