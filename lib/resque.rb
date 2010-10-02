@@ -27,8 +27,10 @@ module Resque
   def mongo=(server)
     case server
     when String
-      host, port = server.split(':')
-      @con = Mongo::Connection.new(host, port)
+      uri = URI.parse(ENV['MONGOHQ_URL'])
+      @con = Mongo::Connection.from_uri(ENV['MONGOHQ_URL'])
+#      host, port = server.split(':')
+#      @con = Mongo::Connection.new(host, port)
       @db = @con.db('monque')
       @mongo = @db.collection('monque')
       @workers = @db.collection('workers')
